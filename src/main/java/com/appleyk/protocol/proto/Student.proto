@@ -1,0 +1,19 @@
+syntax = "proto3";//这个版本的protoc的protobuf编译器已经可以支持proto2语法和proto3的语法
+package com.appleyk.protocol.model; 
+option java_outer_classname = "SObjectModel";  //输出的类名
+
+message Students{
+	
+	repeated Student students = 1;
+	
+	message Student{
+	
+		int64 id    = 1 ;
+		string name = 2 ;
+		repeated string hobbies   = 3 ;
+		map<string,double> grades = 4 ;
+	
+	}
+
+}
+  
