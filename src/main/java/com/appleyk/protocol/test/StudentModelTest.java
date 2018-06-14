@@ -1,5 +1,9 @@
 package com.appleyk.protocol.test;
 
+import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +57,6 @@ public class StudentModelTest {
 		System.out.println("输出对象信息："+students);
 		byte[] data = students.toByteArray();
 		System.out.println("protobuff字节数："+data.length);
-				
 		//对象 再次转化成Java实体类
 		pbfModelToJavaEntity(students.getStudentsList());
 		
@@ -83,4 +86,42 @@ public class StudentModelTest {
 		String json  = mapper.writeValueAsString(stuList);
 		System.out.println("json字节数："+json.getBytes().length);
 	}
+	
+	//对于大量数据的写入，使用缓冲流BufferedOutputStream类可以提高效率  
+    public static void writeData(byte[] data)  
+    {  
+        String fileName="c:/students.pbf";  
+        try  
+        {  
+            DataOutputStream out=new DataOutputStream(  
+                                 new BufferedOutputStream(  
+                                 new FileOutputStream(fileName)));  
+            out.write(data);
+            out.close();  
+            System.out.println("写入成功！");
+        } catch (Exception e)  
+        {  
+            e.printStackTrace();  
+        }  
+    }  
+    
+    /**
+     * 读二进制文件
+     */
+    public static void readData()  
+    {  
+        try  
+        {  
+            FileInputStream stream=new FileInputStream("c:/students.pbf");  
+            int c;  
+            while((c=stream.read())!=-1)  
+            {  
+                System.out.println(c);  
+            }  
+            stream.close();
+        } catch (Exception e)  
+        {  
+            e.printStackTrace();  
+        }  
+    }  
 }
